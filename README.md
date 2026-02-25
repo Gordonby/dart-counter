@@ -1,32 +1,41 @@
-# DartCounter API
+# Dart Counter AI Skill
 
-I like tracking progress against improving my darts.
-The DartCounter app is awesome for inputting scores, even better with the Omni auto scoring system.
+The DartCounter app is awesome for inputting scores, even better with the Omni auto scoring system. They don't however make it easy to get your data out of the app.
+The purpose of this repo is to easily free your data, allowing you to save it safely and perform analysis of it.
 
-The client app shows all statistics, but doesn't show my exactly what I want, to answer the question,
+## What can it do
 
-**"Am I improving?"**
+- Login to the API
+- Get your data
+- Show an ascii dashboard of your stats
 
-Throwing thousands of darts over hundreds of legs, it's hard to get a hollistic factual understanding of if you're improving, and analysing that would take a long time.
-
-Thankfully they have an [OpenAPI spec](https://api.dartcounter.net/docs/api-docs.json) where I could see how to use the API. I combined this with information from my browser by visiting their [web app](https://app.dartcounter.net/).
-
-I created a jupyter notebook to pull the relevant information from their API, analyse it, aggregate it at a day level, and see if I'm getting better, day by day.
-
-## How can I run this?
-
-1. Install python 3, I used 3.9
-1. [Install jupyterlab ](https://jupyterlab.readthedocs.io/en/latest/getting_started/installation.html), I just used pip
-1. Set environment variables for your email and password:
-```bash
-export DARTCOUNTER_EMAIL=<your-email-here@mail.com>
-export DARTCOUNTER_PASSWORD=<REDACTED>
+```output
+   1     +--------------------------------------------------+
+    2     |                DARTCOUNTER STATS                 |
+    3     +--------------------------------------------------+
+    4     | TOTAL GAMES:   68                                |
+    5     | WIN RATE:      38.2%                             |
+    6     | AVG 3-DART:    41.01                             |
+    7     | BEST AVG:      60.12                             |
+    8     +--------------------------------------------------+
+    9     |           RECENT MATCH PERFORMANCE               |
+   10     +--------------------------------------------------+
+   11     | 2026-02-25 | WON  | 2-0   | AVG: 37.11      |    |
+   12     | 2026-02-25 | LOSS | 0-1   | AVG: 40.42      | 🤖 |
+   13     | 2026-02-25 | WON  | 1-0   | AVG: 48.48      | 🤖 |
+   14     | 2026-02-25 | WON  | 1-0   | AVG: 57.81      | 🤖 |
+   15     | 2026-02-25 | LOSS | 0-1   | AVG: 38.42      | 🤖 |
+   16     +--------------------------------------------------+
 ```
-1. Run this: `python3 -m jupyterlab` in this directory
 
-You should see this:
-![alt text](image.png)
+## Getting started
 
-Run each of the cells in turn to see how the information is fetched, analysed, combined, and plotted:
+### Install
 
-![alt text](image-1.png)
+The skill was built with gemini but you can install it on many AI cli's
+
+## Origin story
+
+Forked from https://github.com/Mark-McCracken/dart-counter-aggregator, as my only reference to the API (the OpenAPI spec has long since disappeared from the link).
+
+I'm not a massive python file, and i'm quite into my AI CLI's at the moment - so i've turned this into an AI skill to capture the data which can then be visualised in a variety of ways.
