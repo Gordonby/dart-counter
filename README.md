@@ -1,6 +1,7 @@
 # Dart Counter AI Skill
 
-The DartCounter app is awesome for inputting scores, even better with the Omni auto scoring system. They don't however make it easy to get your data out of the app.
+The [DartCounter app](https://dartcounter.net/) is awesome for inputting scores, even better with the Omni auto scoring system. 
+They don't however make it easy to get your data out of the app.
 The purpose of this repo is to easily free your data, allowing you to save it safely and perform analysis of it.
 
 ## What can it do
@@ -94,4 +95,4 @@ The skill is built using PowerShell for cross-platform compatibility (Windows/Co
 
 Forked from https://github.com/Mark-McCracken/dart-counter-aggregator, as my only reference to the API (the OpenAPI spec has long since disappeared from the link).
 
-I'm not a massive python file, and i'm quite into my AI CLI's at the moment - so i've turned this into an AI skill to capture the data which can then be visualised in a variety of ways.
+I'm not a massive python fan, and i'm quite into my AI CLI's at the moment - so i've turned this into an AI skill to capture the data which can then be visualised in a variety of ways.
