@@ -1,0 +1,114 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "DartCounter API (Reconstructed)",
+    "version": "1.0.0",
+    "description": "Reconstructed API specification for api.dartcounter.net based on project documentation and code."
+  },
+  "servers": [
+    {
+      "url": "https://api.dartcounter.net"
+    }
+  ],
+  "paths": {
+    "/login": {
+      "post": {
+        "summary": "Authenticate user",
+        "description": "Log in with email and password to receive a bearer token.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "login": { "type": "string" },
+                  "password": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "access_token": { "type": "string" },
+                    "token_type": { "type": "string" },
+                    "expires_in": { "type": "integer" },
+                    "user": { "type": "object" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/profile": {
+      "get": {
+        "summary": "Get User Profile",
+        "security": [{ "bearerAuth": [] }],
+        "responses": {
+          "200": { "description": "User profile details" }
+        }
+      }
+    },
+    "/matches": {
+      "get": {
+        "summary": "List Matches",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          { "name": "from_date", "in": "query", "schema": { "type": "string" } },
+          { "name": "to_date", "in": "query", "schema": { "type": "string" } },
+          { "name": "page", "in": "query", "schema": { "type": "integer" } },
+          { "name": "limit", "in": "query", "schema": { "type": "integer" } }
+        ],
+        "responses": {
+          "200": { "description": "A list of matches" }
+        }
+      }
+    },
+    "/matches/opensearch": {
+      "get": {
+        "summary": "Search Matches (OpenSearch)",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          { "name": "from_date", "in": "query", "schema": { "type": "string" } },
+          { "name": "to_date", "in": "query", "schema": { "type": "string" } },
+          { "name": "is_verified", "in": "query", "schema": { "type": "boolean" } },
+          { "name": "limit", "in": "query", "schema": { "type": "integer" } },
+          { "name": "page", "in": "query", "schema": { "type": "integer" } }
+        ],
+        "responses": {
+          "200": { "description": "Search results for matches" }
+        }
+      }
+    },
+    "/matches/{match_id}": {
+      "get": {
+        "summary": "Get Match Details",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          { "name": "match_id", "in": "path", "required": true, "schema": { "type": "integer" } }
+        ],
+        "responses": {
+          "200": { "description": "Detailed match data including legs and turns" }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}
