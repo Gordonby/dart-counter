@@ -16,7 +16,7 @@ $body = @{
 
 Write-Host "Authenticating with api.dartcounter.net..." -ForegroundColor Cyan
 
-$response = curl.exe -s -X POST https://api.dartcounter.net/login `
+$response = curl -s -X POST https://api.dartcounter.net/login `
     -H "Accept: application/json" `
     -H "Content-Type: application/json" `
     -H "Origin: https://app.dartcounter.net" `
