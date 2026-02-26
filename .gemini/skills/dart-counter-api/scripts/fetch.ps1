@@ -7,7 +7,7 @@ param(
 )
 
 # REF: This is the known good URL that we're constructing
-https://api.dartcounter.net/matches/opensearch?from_date=Thu%20Jan%2001%202026%2000%3A00%3A00%20GMT%2B0000&to_date=Thu%20Dec%2031%202026%2023%3A59%3A59%20GMT%2B0000&is_verified=true&limit=25&page=1
+#https://api.dartcounter.net/matches/opensearch?from_date=Thu%20Jan%2001%202026%2000%3A00%3A00%20GMT%2B0000&to_date=Thu%20Dec%2031%202026%2023%3A59%3A59%20GMT%2B0000&is_verified=true&limit=25&page=1
 
 $token = $env:dartcounter
 if (-not $token) {
