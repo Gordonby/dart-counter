@@ -92,7 +92,7 @@ function Render-AsciiDashboard($Matches, $TargetUserId) {
 "@
     
     $dashboard += "`n"
-    for ($i = 0; $i -lt [math]::Min(5, $totalGames); $i++) {
+    for ($i = 0; $i -lt $totalGames; $i++) {
         $m = $Matches[$i]
         $userStats = $m.users | Where-Object { $_.user_id -eq $TargetUserId }
         $otherStats = $m.users | Where-Object { $_.user_id -ne $TargetUserId }
