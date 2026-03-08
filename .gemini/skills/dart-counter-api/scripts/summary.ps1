@@ -106,14 +106,16 @@ function Render-AsciiDashboard($Matches, $TargetUserId) {
         $score = "$legsWon-$legsLost"
         
         $avgValue = if ($userStats -and $userStats.three_dart_average) { "{0:N2}" -f $userStats.three_dart_average } else { "0.00" }
-        $vsCpu = if ($m.settings -and $m.settings.vs_cpu -eq $true) { "🤖" } else { "  " }
+        $vsCpu = if ($m.settings -and $m.settings.vs_cpu -eq $true) { 
+            if ($m.settings.cpu_level) { "🤖$($m.settings.cpu_level)" } else { "🤖 " }
+        } else { "" }
         
         # Main match row with explicit column widths
         $cDate  = "{0,-10}" -f $date
         $cRes   = "{0,-4}"  -f $res
         $cScore = "{0,-5}"  -f $score
-        $cAvg   = "AVG: {0,-10}" -f $avgValue
-        $cRobot = "{0,-2}"  -f $vsCpu
+        $cAvg   = "AVG: {0,-8}" -f $avgValue
+        $cRobot = "{0,-4}"  -f $vsCpu
         
         $dashboard += "    | $cDate | $cRes | $cScore | $cAvg | $cRobot |`n"
 
@@ -129,8 +131,8 @@ function Render-AsciiDashboard($Matches, $TargetUserId) {
                     $cLDate  = "{0,-10}" -f ""
                     $cLRes   = "{0,-4}"  -f ""
                     $cLScore = "{0,-5}"  -f ""
-                    $cLAvg   = "{0,-15}" -f $legInfo
-                    $cLRobot = "{0,-2}"  -f ""
+                    $cLAvg   = "{0,-13}" -f $legInfo
+                    $cLRobot = "{0,-4}"  -f ""
                     
                     $dashboard += "    | $cLDate | $cLRes | $cLScore | $cLAvg | $cLRobot |`n"
                 }
