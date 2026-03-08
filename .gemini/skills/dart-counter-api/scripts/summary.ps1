@@ -1,6 +1,12 @@
+param(
+    [string]$TargetUserId,
+    [string]$Format = "ASCII",
+    [int]$Limit = 25
+)
+
 $token = $env:dartcounter
 if (-not $token) {
-    Write-Host "Error: environment variable 'dartcounter' is not set." -ForegroundColor Red
+    Write-Host "Error: environment variable 'dartcounter' for the user and auth is not set." -ForegroundColor Red
     exit 1
 }
 
@@ -43,6 +49,9 @@ function Persist-Data($Data, [string]$Category) {
     $Data | ConvertTo-Json -Depth 10 | Set-Content -Path $filename
     return $filename
 }
+
+
+Write-Host "Fetching latest matches..." -ForegroundColor Cyan
 
 function Render-AsciiDashboard($Matches, $TargetUserId) {
     if (-not $Matches -or $Matches.Count -eq 0) {
@@ -134,18 +143,22 @@ function Render-AsciiDashboard($Matches, $TargetUserId) {
     return $dashboard
 }
 
-Write-Host "Fetching latest matches..." -ForegroundColor Cyan
-$params = "from_date=Thu%20Jan%2001%202026%2000%3A00%3A00%20GMT%2B0000&to_date=Thu%20Dec%2031%202026%2023%3A59%3A59%20GMT%2B0000&limit=250&page=1&is_verified=true"
+$params = "from_date=Thu%20Jan%2001%202026%2000%3A00%3A00%20GMT%2B0000&to_date=Thu%20Dec%2031%202026%2023%3A59%3A59%20GMT%2B0000&limit=$Limit&page=1&is_verified=true"
 
 $data = Fetch-Data -Endpoint "/matches/opensearch" -Params $params
 
-# For this session, we'll use the authenticated User ID: 15836224
-$currentUserId = 15836224
+if (-not $TargetUserId -and $data -and $data.data) {
+    Write-Host "Determining User ID from match data..." -ForegroundColor DarkGray
+    $TargetUserId = $data.data.verified_by_user_ids | Group-Object | Sort-Object Count -Descending | Select-Object -First 1 -ExpandProperty Name
+}
 
 if ($data -and $data.data) {
     $filename = Persist-Data -Data $data -Category "matches"
     Write-Host "Data persisted to: $filename" -ForegroundColor Green
-    Write-Host (Render-AsciiDashboard -Matches $data.data -TargetUserId $currentUserId) -ForegroundColor Cyan
+    $dashboard = Render-AsciiDashboard -Matches $data.data -TargetUserId $TargetUserId
+
+    Write-Output $dashboard
+
 } else {
     Write-Host "Failed to retrieve match data." -ForegroundColor Yellow
 }
